@@ -1,0 +1,19 @@
+{
+  "name": "kagawa-ajet-push",
+  "version": "1.0.0",
+  "description": "Sends Push Notification requests to the Kagawa AJET website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrismilson/kagawa-ajet-push.git"
+  },
+  "author": "Chris Milson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrismilson/kagawa-ajet-push/issues"
+  },
+  "homepage": "https://github.com/chrismilson/kagawa-ajet-push#readme"
+}
