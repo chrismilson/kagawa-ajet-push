@@ -14,9 +14,21 @@ const keys = require('./oauth2.keys')
 async function main () {
   const oAuth2Client = await getAuthenticatedClient()
 
-  axios.push('https://kagawa-ajet.herokuapp.com/push', {
-    message: 'Hello!'
+  var title = 'Test'
+
+  var body = 'This is a test push notification'
+
+  axios.post('https://kagawa-ajet.herokuapp.com/push', {
+  // axios.post('http://localhost:5000/push', {
+    serverMessage: 'Posting new Notification',
+    auth: oAuth2Client.credentials.id_token,
+    payload: JSON.stringify({
+      title: title,
+      body: body
+    })
   })
+    .then(res => console.log(res.data.message))
+    .catch(err => console.error(err))
 }
 
 /**
