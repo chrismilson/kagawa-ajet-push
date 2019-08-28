@@ -2,13 +2,7 @@ class Notification {
   constructor (title, options) {
     this._title = title || 'Test'
     this._options = options || {
-      body: 'This is a test. Click me!',
-      actions: [
-        {
-          action: 'events',
-          title: 'Events'
-        }
-      ],
+      body: 'This is a test.',
       tag: 'test',
       renotify: true
     }
