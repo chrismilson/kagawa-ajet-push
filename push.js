@@ -7,6 +7,7 @@ const axios = require('axios')
 
 // Download your OAuth2 configuration from the Google
 const keys = require('./oauth2.keys')
+const Notification = require('./Notification')
 
 /**
  * Start by acquiring a pre-authenticated oAuth2 client.
@@ -14,21 +15,20 @@ const keys = require('./oauth2.keys')
 async function main () {
   const oAuth2Client = await getAuthenticatedClient()
 
-  var title = 'Test'
+  var notification = new Notification()
 
-  var body = 'This is a test push notification'
+  console.log(notification.json)
 
-  axios.post('https://kagawa-ajet.herokuapp.com/push', {
-  // axios.post('http://localhost:5000/push', {
-    serverMessage: 'Posting new Notification',
-    auth: oAuth2Client.credentials.id_token,
-    payload: JSON.stringify({
-      title: title,
-      body: body
+  if (notification) {
+    // axios.post('https://kagawa-ajet.herokuapp.com/push', {
+    axios.post('http://localhost:5000/push', {
+      serverMessage: 'Posting new Notification',
+      auth: oAuth2Client.credentials.id_token,
+      payload: JSON.stringify(notification.json)
     })
-  })
-    .then(res => console.log(res.data.message))
-    .catch(err => console.error(err))
+      .then(res => console.log(res.data.message))
+      .catch(err => console.error(err))
+  }
 }
 
 /**
