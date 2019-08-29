@@ -1,9 +1,9 @@
 module.exports = {
-  text: [
+  Text: [
     { name: 'title' },
     { name: 'body' }
   ],
-  'local url': [
+  'Local url': [
     { name: 'title' },
     { name: 'body' },
     {
@@ -29,6 +29,11 @@ module.exports = {
       ],
       default: 'Home'
     }
+  ],
+  Remove: [
+    {
+      name: 'tag',
+      message: 'What was the message tag?'
+    }
   ]
-
 }
