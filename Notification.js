@@ -1,4 +1,5 @@
 const inquirer = require('inquirer')
+const moment = require('moment')
 const schemes = require('./schemes')
 
 class Notification {
@@ -11,6 +12,7 @@ class Notification {
     tag: 'test',
     renotify: true
   }) {
+    options.tag = options.tag || moment().format('M/D-H:mm')
     this._title = options.title
     options.title = undefined
     this._options = options
@@ -85,7 +87,11 @@ function answerToOptions (answer) {
 
 function Custom () {
   return new Promise((resolve, reject) => {
-    var typeNames = Object.keys(schemes).concat(['test', 'cancel'])
+    var typeNames = Object.keys(schemes).concat([
+      new inquirer.Separator(),
+      'test',
+      'cancel'
+    ])
     inquirer.prompt([
       {
         type: 'list',
