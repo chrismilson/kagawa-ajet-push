@@ -20,8 +20,8 @@ async function main () {
       if (!json) return
 
       const oAuth2Client = await getAuthenticatedClient()
-      axios.post('https://kagawa-ajet.herokuapp.com/push', {
-      // axios.post('http://localhost:5000/push', {
+      axios.post('https://kagawa-ajet.herokuapp.com/push/notify', {
+      // axios.post('http://localhost:5000/push/notify', {
         serverMessage: 'Posting new Notification',
         auth: oAuth2Client.credentials.id_token,
         payload: JSON.stringify(json)
