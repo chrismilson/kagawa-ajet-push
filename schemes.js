@@ -30,9 +30,17 @@ module.exports = {
       default: 'Home'
     },
     {
-      when: ({ url }) => url === '/calendar',
-      name: 'date',
-      validate: input => true
+      when: ({ url }) => url.match(/^\/calendar/),
+      name: 'url',
+      message: 'Date or event? YYYY-M-D or "event"',
+      transformer: answer => answer.match(/event/) ? 'Event' : answer,
+      filter: answer => '/calendar/' + answer
+    },
+    {
+      when: ({ url }) => url.match(/^\/calendar\/event/),
+      name: 'url',
+      message: 'Paste the event id here:',
+      filter: answer => '/calendar/event/' + answer
     }
   ],
   Remove: [
