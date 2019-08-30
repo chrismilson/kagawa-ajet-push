@@ -7,8 +7,7 @@ class Notification {
     title: 'Test',
     body: 'This is a test.',
     data: {
-      url: '/calendar',
-      dev: true
+      url: '/calendar'
     },
     tag: 'test',
     renotify: true
