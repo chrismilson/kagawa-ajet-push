@@ -28,6 +28,11 @@ module.exports = {
         }
       ],
       default: 'Home'
+    },
+    {
+      when: ({ url }) => url === '/calendar',
+      name: 'date',
+      validate: input => true
     }
   ],
   Remove: [
