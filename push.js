@@ -14,6 +14,30 @@ const { Custom } = require('./Notification')
  * Start by acquiring a pre-authenticated oAuth2 client.
  */
 async function main () {
+  let url
+  await inquirer.prompt([
+    {
+      name: 'path',
+      type: 'list',
+      message: 'Send to production or local server?',
+      choices: [
+        {
+          name: 'Production',
+          value: 'https://kagawa-ajet.herokuapp.com/push/notify'
+        },
+        {
+          name: 'Local',
+          value: 'http://localhost:5000/push/notify'
+        }
+      ]
+    },
+    {
+      name: 'dev',
+      message: 'Just send to Dev?',
+      default: ({ path }) => path.match(/localhost/),
+      type: 'confirm'
+    }
+  ]).then(({ path, dev }) => (url = path + (dev ? '/dev' : '')))
   const oAuth2Client = await getAuthenticatedClient()
   var again = true
 
@@ -22,9 +46,6 @@ async function main () {
     await notification.confirm()
       .then(async json => {
         if (!json) return
-
-        var url = 'https://kagawa-ajet.herokuapp.com/push/notify/dev'
-        // var url = 'http://localhost:5000/push/notify/dev'
 
         await axios.post(url, {
           serverMessage: 'Posting new Notification',
