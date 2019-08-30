@@ -23,8 +23,10 @@ async function main () {
       .then(async json => {
         if (!json) return
 
-        await axios.post('https://kagawa-ajet.herokuapp.com/push/notify', {
-        // axios.post('http://localhost:5000/push/notify', {
+        var url = 'https://kagawa-ajet.herokuapp.com/push/notify/dev'
+        // var url = 'http://localhost:5000/push/notify/dev'
+
+        await axios.post(url, {
           serverMessage: 'Posting new Notification',
           auth: oAuth2Client.credentials.id_token,
           payload: JSON.stringify(json)
