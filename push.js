@@ -4,6 +4,7 @@ const url = require('url')
 const open = require('open')
 const destroyer = require('server-destroy')
 const axios = require('axios')
+const inquirer = require('inquirer')
 
 // Download your OAuth2 configuration from the Google
 const keys = require('./oauth2.keys')
@@ -13,23 +14,34 @@ const { Custom } = require('./Notification')
  * Start by acquiring a pre-authenticated oAuth2 client.
  */
 async function main () {
-  var notification = await Custom()
+  const oAuth2Client = await getAuthenticatedClient()
+  var again = true
 
-  notification.confirm()
-    .then(async json => {
-      if (!json) return
+  while (again) {
+    var notification = await Custom()
+    await notification.confirm()
+      .then(async json => {
+        if (!json) return
 
-      const oAuth2Client = await getAuthenticatedClient()
-      axios.post('https://kagawa-ajet.herokuapp.com/push/notify', {
-      // axios.post('http://localhost:5000/push/notify', {
-        serverMessage: 'Posting new Notification',
-        auth: oAuth2Client.credentials.id_token,
-        payload: JSON.stringify(json)
+        await axios.post('https://kagawa-ajet.herokuapp.com/push/notify', {
+        // axios.post('http://localhost:5000/push/notify', {
+          serverMessage: 'Posting new Notification',
+          auth: oAuth2Client.credentials.id_token,
+          payload: JSON.stringify(json)
+        })
+          .then(res => console.log(res.data.message))
+          .catch(err => console.error(err))
       })
-        .then(res => console.log(res.data.message))
-        .catch(err => console.error(err))
-    })
-    .catch(err => console.error(err))
+      .catch(err => console.error(err))
+    await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'res',
+        message: 'Draft another notification?',
+        default: true
+      }
+    ]).then(answer => (again = answer.res))
+  }
 }
 
 /**

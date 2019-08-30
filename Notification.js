@@ -12,7 +12,7 @@ class Notification {
     tag: 'test',
     renotify: true
   }) {
-    options.tag = options.tag || moment().format('M/D-H:mm')
+    options.tag = options.tag || moment().format('M/D-HH')
     this._title = options.title
     options.title = undefined
     this._options = options
